@@ -10,5 +10,8 @@
     <string name="title_activity_formulario">Formulario</string>
     <string name="nuevoProducto">Nuevo Producto</string>
     <string name="mapa">Mapa</string>
+    <string name="sincronizar">Sincronizar</string>
+    <string name="recibir_nuevos_productos">Recibir Nuevos Productos</string>
+    <string name="preferencias">Preferencias</string>
 
 </resources>

@@ -3,13 +3,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="pe.joedayz.registroprodcuctos.MainActivity" >
 
-   
-    <item 
+    <item
         android:id="@+id/nuevoProducto"
+        android:showAsAction="always"
+        android:icon="@drawable/ic_nuevo"
         android:title="@string/nuevoProducto"/>
-    
     <item
         android:id="@+id/mapa"
+        android:showAsAction="always"
+        android:icon="@drawable/ic_mapa"
         android:title="@string/mapa"/>
+    <item
+        android:id="@+id/enviar_productos"
+        android:showAsAction="always"
+        android:icon="@drawable/ic_enviar"
+        android:title="@string/sincronizar"/>
 
+    <item
+        android:id="@+id/recibir_nuevos_productos"
+        android:showAsAction="always"
+        android:icon="@drawable/ic_recibir"
+        android:title="@string/recibir_nuevos_productos"/>  
+    
+    <item
+        android:id="@+id/preferencias"
+        android:icon="@drawable/ic_preferencias"
+        android:title="@string/preferencias"/>
+        
+    
+    
 </menu>
