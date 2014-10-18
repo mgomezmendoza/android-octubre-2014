@@ -1118,10 +1118,12 @@ containing a value of this type.
         public static final int listMode=0x7f050001;
         public static final int list_item=0x7f050029;
         public static final int listaProductos=0x7f05003c;
+        public static final int mapa=0x7f050045;
         public static final int middle=0x7f050012;
         public static final int never=0x7f050009;
         public static final int none=0x7f050010;
         public static final int normal=0x7f050000;
+        public static final int nuevoProducto=0x7f050044;
         public static final int progress_circular=0x7f050018;
         public static final int progress_horizontal=0x7f050019;
         public static final int radio=0x7f05002f;
@@ -1204,7 +1206,8 @@ containing a value of this type.
         public static final int support_simple_spinner_dropdown_item=0x7f03001a;
     }
     public static final class menu {
-        public static final int main=0x7f0c0000;
+        public static final int formulario=0x7f0c0000;
+        public static final int main=0x7f0c0001;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -1252,7 +1255,10 @@ containing a value of this type.
         public static final int descripcion=0x7f0a0011;
         public static final int grabar=0x7f0a0012;
         public static final int hello_world=0x7f0a000e;
+        public static final int mapa=0x7f0a0015;
         public static final int nombre=0x7f0a0010;
+        public static final int nuevoProducto=0x7f0a0014;
+        public static final int title_activity_formulario=0x7f0a0013;
     }
     public static final class style {
         /** 
