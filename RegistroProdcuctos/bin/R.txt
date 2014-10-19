@@ -366,6 +366,7 @@ int string hello_world 0x7f0a000e
 int string mapa 0x7f0a0015
 int string nombre 0x7f0a0010
 int string nuevoProducto 0x7f0a0014
+int string opciones 0x7f0a0019
 int string preferencias 0x7f0a0018
 int string recibir_nuevos_productos 0x7f0a0017
 int string sincronizar 0x7f0a0016

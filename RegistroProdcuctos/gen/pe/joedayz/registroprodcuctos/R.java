@@ -1268,6 +1268,7 @@ containing a value of this type.
         public static final int mapa=0x7f0a0015;
         public static final int nombre=0x7f0a0010;
         public static final int nuevoProducto=0x7f0a0014;
+        public static final int opciones=0x7f0a0019;
         public static final int preferencias=0x7f0a0018;
         public static final int recibir_nuevos_productos=0x7f0a0017;
         public static final int sincronizar=0x7f0a0016;

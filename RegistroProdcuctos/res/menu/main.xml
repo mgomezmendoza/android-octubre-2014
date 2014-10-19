@@ -1,35 +1,36 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
 
     <item
         android:id="@+id/nuevoProducto"
-        app:showAsAction="ifRoom"
         android:icon="@drawable/ic_nuevo"
-        android:title="@string/nuevoProducto"/>
+        android:title="@string/nuevoProducto"
+        app:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/mapa"
-        app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_mapa"
-        android:title="@string/mapa"/>
-    <item
-        android:id="@+id/enviar_productos"
-       app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_enviar"
-        android:title="@string/sincronizar"/>
+        android:icon="@drawable/ic_opciones"
+        android:title="@string/opciones"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/mapa"
+                android:icon="@drawable/ic_mapa"
+                android:title="@string/mapa"
+                app:showAsAction="ifRoom"/>
+            <item
+                android:id="@+id/enviar_productos"
+                android:icon="@drawable/ic_enviar"
+                android:title="@string/sincronizar"
+                app:showAsAction="ifRoom"/>
+            <item
+                android:id="@+id/recibir_nuevos_productos"
+                android:icon="@drawable/ic_recibir"
+                android:title="@string/recibir_nuevos_productos"/>
+            <item
+                android:id="@+id/preferencias"
+                android:icon="@drawable/ic_preferencias"
+                android:title="@string/preferencias"
+                app:showAsAction="ifRoom"/>
+        </menu>
+    </item>
 
-    <item
-        android:id="@+id/recibir_nuevos_productos"
-       app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_recibir"
-        android:title="@string/recibir_nuevos_productos"/>  
-    
-    <item
-        android:id="@+id/preferencias"
-        app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_preferencias"
-        android:title="@string/preferencias"/>
-        
-    
-    
 </menu>
