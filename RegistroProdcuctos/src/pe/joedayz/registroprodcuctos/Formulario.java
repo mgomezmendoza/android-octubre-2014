@@ -4,6 +4,9 @@ import pe.joedayz.registroprodcuctos.dao.ProductoDAO;
 import pe.joedayz.registroprodcuctos.modelo.Producto;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 
 public class Formulario extends ActionBarActivity {
 
@@ -15,13 +18,29 @@ public class Formulario extends ActionBarActivity {
 		setContentView(R.layout.formulario);
 		
 		formularioHelper = new FormularioHelper(this);
-		Producto producto = 
-				formularioHelper.guardarProductoDeFormulario();
+
+		Button boton = (Button)
+					findViewById(R.id.btnGuardarProducto);
+		boton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Producto producto = 
+						formularioHelper.guardarProductoDeFormulario();
+				
+				ProductoDAO dao = new ProductoDAO(Formulario.this);
+				dao.guardar(producto);
+				dao.close();
+				
+				finish();
+			}
+		});
 		
-		ProductoDAO dao = new ProductoDAO(this);
-		dao.guardar(producto);
 		
-	
+		
+		
+
+
 	}
 
 //	@Override
