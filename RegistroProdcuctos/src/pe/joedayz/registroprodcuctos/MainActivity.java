@@ -1,5 +1,9 @@
 package pe.joedayz.registroprodcuctos;
 
+import java.util.List;
+
+import pe.joedayz.registroprodcuctos.dao.ProductoDAO;
+import pe.joedayz.registroprodcuctos.modelo.Producto;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -20,13 +24,13 @@ public class MainActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		String[] productos = {"Leche", "Arroz", "Azucar",
-								"Aceite"};
+		ProductoDAO dao = new ProductoDAO(this);
+		List<Producto> productos = dao.getLista();
 		
 		
 		int layout = android.R.layout.simple_list_item_1;
-		ArrayAdapter<String> arrayAdapter =
-				new ArrayAdapter<String>(this, layout, productos);
+		ArrayAdapter<Producto> arrayAdapter =
+				new ArrayAdapter<Producto>(this, layout, productos);
 		
 		ListView lista = (ListView)
 					findViewById(R.id.listaProductos);
