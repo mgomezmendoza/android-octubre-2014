@@ -1,16 +1,27 @@
 package pe.joedayz.registroprodcuctos;
 
-import android.support.v7.app.ActionBarActivity;
+import pe.joedayz.registroprodcuctos.dao.ProductoDAO;
+import pe.joedayz.registroprodcuctos.modelo.Producto;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.app.ActionBarActivity;
 
 public class Formulario extends ActionBarActivity {
+
+	private FormularioHelper formularioHelper;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.formulario);
+		
+		formularioHelper = new FormularioHelper(this);
+		Producto producto = 
+				formularioHelper.guardarProductoDeFormulario();
+		
+		ProductoDAO dao = new ProductoDAO(this);
+		dao.guardar(producto);
+		
+	
 	}
 
 //	@Override
