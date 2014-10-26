@@ -138,7 +138,7 @@ public class MainActivity extends ActionBarActivity {
 
 
             } catch (IOException ex) {
-                Log.e("PlaceholderFragment", "Error", e);
+                Log.e("PlaceholderFragment", "Error", ex);
                 return null;
             } finally {
 
