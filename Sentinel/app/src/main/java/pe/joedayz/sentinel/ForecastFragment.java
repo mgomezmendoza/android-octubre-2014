@@ -144,9 +144,9 @@ public class ForecastFragment
 
                 URL url = new URL(builUri.toString());
 
-                
 
-                Log.v(LOG_TAG, "Buildt URI " + builUri.toString());
+
+                Log.v(LOG_TAG, "Buildt URI para validar " + builUri.toString());
 
 
                 urlConnection = (HttpURLConnection) url.openConnection();
