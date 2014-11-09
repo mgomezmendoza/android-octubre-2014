@@ -1,9 +1,11 @@
 package pe.joedayz.sentinel;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.internal.app.ToolbarActionBar;
 import android.util.Log;
@@ -49,26 +51,14 @@ public class ForecastFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        String[] data = {
-                "Lun 10/25 - Soleado - 31/17",
-                "Mar 10/26 - Nublado - 21/8",
-                "Mie 10/27 - Lluvioso - 18/11",
-                "Jue 10/28 - Soleado - 31/17",
-                "Vie 10/29 - Nublado - 21/8",
-                "Sab 10/30 - Otro - 23/18",
-                "Dom 10/31 - Soleado - 20/7"
 
-        };
-
-        List<String> weekForecast =
-                new ArrayList<String>(Arrays.asList(data));
 
         forecastAdapter =
                 new ArrayAdapter<String>(
                         getActivity(),
                         R.layout.list_item_forecast,
                         R.id.list_item_forecast_textview,
-                        weekForecast
+                        new ArrayList<String>()
 
                 );
 
@@ -99,6 +89,21 @@ public class ForecastFragment
         return rootView;
     }
 
+    private void updateWeather(){
+        FetchWeatherTask weatherTask = new FetchWeatherTask();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+        String location = prefs.getString(getString(R.string.pref_location_key),
+                getString(R.string.pref_location_default));
+        weatherTask.execute(location);
+
+
+
+    }
+
+
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,16 +122,19 @@ public class ForecastFragment
         int id = item.getItemId();
         if (id == R.id.action_refresh) {
 
-            FetchWeatherTask weatherTask = new FetchWeatherTask();
-            weatherTask.execute("94043");
+            updateWeather();
+
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-
-
+    @Override
+    public void onStart() {
+        super.onStart();
+        updateWeather();
+    }
 
     public class FetchWeatherTask extends
             AsyncTask<String, Void, String[]> {
@@ -137,7 +145,7 @@ public class ForecastFragment
         /* The date/time conversion code is going to be moved outside the asynctask later,
   * so for convenience we're breaking it out into its own method now.
   */
-        private String getReadableDateString(long time){
+        private String getReadableDateString(long time) {
             // Because the API returns a unix timestamp (measured in seconds),
             // it must be converted to milliseconds in order to be converted to valid date.
             Date date = new Date(time * 1000);
@@ -160,7 +168,7 @@ public class ForecastFragment
         /**
          * Take the String representing the complete forecast in JSON Format and
          * pull out the data we need to construct the Strings needed for the wireframes.
-         *
+         * <p/>
          * Fortunately parsing is easy:  constructor takes the JSON string and converts it
          * into an Object hierarchy for us.
          */
@@ -180,7 +188,7 @@ public class ForecastFragment
             JSONArray weatherArray = forecastJson.getJSONArray(OWM_LIST);
 
             String[] resultStrs = new String[numDays];
-            for(int i = 0; i < weatherArray.length(); i++) {
+            for (int i = 0; i < weatherArray.length(); i++) {
                 // For now, using the format "Day, description, hi/low"
                 String day;
                 String description;
@@ -297,13 +305,12 @@ public class ForecastFragment
                 }
             }
 
-            try{
+            try {
                 return getWeatherDataFromJson(forecastJsonStr, numDays);
-            }catch (JSONException e){
+            } catch (JSONException e) {
                 Log.e(LOG_TAG, e.getMessage(), e);
                 e.printStackTrace();
             }
-
 
 
             return null;
@@ -312,9 +319,9 @@ public class ForecastFragment
 
         @Override
         protected void onPostExecute(String[] result) {
-            if(result!=null){
+            if (result != null) {
                 forecastAdapter.clear();
-                for(String dayForecastStr : result){
+                for (String dayForecastStr : result) {
                     forecastAdapter.add(dayForecastStr);
                 }
             }
