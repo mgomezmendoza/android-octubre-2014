@@ -7,7 +7,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-
+/*modificado*/
+/*modificado*/
+/*modificado*/
 public class Formulario extends ActionBarActivity {
 
 	private FormularioHelper formularioHelper;
