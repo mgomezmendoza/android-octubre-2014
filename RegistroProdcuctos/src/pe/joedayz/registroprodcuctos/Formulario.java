@@ -8,6 +8,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+
+/**
+@author: josediaz
+**/
 public class Formulario extends ActionBarActivity {
 
 	private FormularioHelper formularioHelper;
