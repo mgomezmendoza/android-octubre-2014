@@ -55,8 +55,12 @@ public class DetailActivity extends ActionBarActivity {
 
         private static final String FORECAST_SHARE_HASHTAG = "#Sentinel";
 
+        private String mForecastStr;
+
+
 
         public DetailFragment() {
+            setHasOptionsMenu(true);
         }
 
         @Override
@@ -69,12 +73,24 @@ public class DetailActivity extends ActionBarActivity {
             View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
 
             if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
-                String forecastStr = intent.getStringExtra(Intent.EXTRA_TEXT);
-                ((TextView) rootView.findViewById(R.id.detail_text)).setText(forecastStr);
+                mForecastStr = intent.getStringExtra(Intent.EXTRA_TEXT);
+                ((TextView) rootView.findViewById(R.id.detail_text)).
+                        setText(mForecastStr);
             }
 
 
             return rootView;
         }
+
+        private Intent createShareForecastIntent() {
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_TEXT,
+                    mForecastStr + FORECAST_SHARE_HASHTAG);
+            return shareIntent;
+        }
+
+
     }
 }
