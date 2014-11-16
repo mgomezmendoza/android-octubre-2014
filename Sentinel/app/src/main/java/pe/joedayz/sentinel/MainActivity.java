@@ -26,6 +26,57 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+    @Override  //antes del onpause
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override  //despues del oncreate
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Log.i(LOG_TAG, "ONSTART");
+    }
+
+    @Override  //VISIBLE
+    protected void onResume() {
+        super.onResume();
+        Log.i(LOG_TAG, "ONRESUME");
+    }
+
+    @Override  //para parar el proceso
+    protected void onPause() {
+        super.onPause();
+        Log.i(LOG_TAG, "ONPAUSE");
+
+        //musica
+        //sensor
+        //location
+        //DYNAMIC BROADCAST RECEIVERS
+        //MOTOR DE JUEGOS
+    }
+
+    @Override   //honeycomb para arriba
+    protected void onStop() {
+        super.onStop();
+        Log.i(LOG_TAG, "ONSTOP");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i(LOG_TAG, "ONDESTROY");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
