@@ -9,7 +9,7 @@ import android.util.Log;
 import pe.joedayz.sentinel.data.WeatherContract;
 import pe.joedayz.sentinel.data.WeatherDbHelper;
 
-import static pe.joedayz.sentinel.data.WeatherContract.*;
+import static pe.joedayz.sentinel.data.WeatherContract.WeatherEntry.*;
 
 
 public class TestProvider extends AndroidTestCase {
@@ -20,39 +20,7 @@ public class TestProvider extends AndroidTestCase {
         mContext.deleteDatabase(WeatherDbHelper.DATABASE_NAME);
     }
 
-
-    public void testGetType() {
-        // content://com.example.android.sunshine.app/weather/
-        String type = mContext.getContentResolver().getType(WeatherEntry.CONTENT_URI);
-        // vnd.android.cursor.dir/com.example.android.sunshine.app/weather
-        assertEquals(WeatherEntry.CONTENT_TYPE, type);
-
-        String testLocation = "94074";
-        // content://com.example.android.sunshine.app/weather/94074
-        type = mContext.getContentResolver().getType(
-                WeatherEntry.buildWeatherLocation(testLocation));
-        // vnd.android.cursor.dir/com.example.android.sunshine.app/weather
-        assertEquals(WeatherEntry.CONTENT_TYPE, type);
-
-        String testDate = "20140612";
-        // content://com.example.android.sunshine.app/weather/94074/20140612
-        type = mContext.getContentResolver().getType(
-                WeatherEntry.buildWeatherLocationWithDate(testLocation, testDate));
-        // vnd.android.cursor.item/com.example.android.sunshine.app/weather
-        assertEquals(WeatherEntry.CONTENT_ITEM_TYPE, type);
-
-        // content://com.example.android.sunshine.app/location/
-        type = mContext.getContentResolver().getType(LocationEntry.CONTENT_URI);
-        // vnd.android.cursor.dir/com.example.android.sunshine.app/location
-        assertEquals(LocationEntry.CONTENT_TYPE, type);
-
-        // content://com.example.android.sunshine.app/location/1
-        type = mContext.getContentResolver().getType(LocationEntry.buildLocationUri(1L));
-        // vnd.android.cursor.item/com.example.android.sunshine.app/location
-        assertEquals(LocationEntry.CONTENT_ITEM_TYPE, type);
-    }
-
-    public void testInsertReadDb() {
+    public void testInsertReadProvider() {
 
         // If there's an error in those massive SQL table creation Strings,
         // errors will be thrown here when you try to get a writable database.
@@ -62,7 +30,7 @@ public class TestProvider extends AndroidTestCase {
         ContentValues testValues = TestDb.createNorthPoleLocationValues();
 
         long locationRowId;
-        locationRowId = db.insert(LocationEntry.TABLE_NAME, null, testValues);
+        locationRowId = db.insert(WeatherContract.LocationEntry.TABLE_NAME, null, testValues);
 
         // Verify we got a row back.
         assertTrue(locationRowId != -1);
@@ -73,7 +41,7 @@ public class TestProvider extends AndroidTestCase {
 
         // A cursor is your primary interface to the query results.
         Cursor cursor = db.query(
-                LocationEntry.TABLE_NAME,  // Table to Query
+                WeatherContract.LocationEntry.TABLE_NAME,  // Table to Query
                 null, // all columns
                 null, // Columns for the "where" clause
                 null, // Values for the "where" clause
@@ -87,22 +55,51 @@ public class TestProvider extends AndroidTestCase {
         // Fantastic.  Now that we have a location, add some weather!
         ContentValues weatherValues = TestDb.createWeatherValues(locationRowId);
 
-        long weatherRowId = db.insert(WeatherEntry.TABLE_NAME, null, weatherValues);
+        long weatherRowId = db.insert(TABLE_NAME, null, weatherValues);
         assertTrue(weatherRowId != -1);
 
         // A cursor is your primary interface to the query results.
-        Cursor weatherCursor = db.query(
-                WeatherEntry.TABLE_NAME,  // Table to Query
+        Cursor weatherCursor = mContext.getContentResolver().query(
+                CONTENT_URI,  // Table to Query
                 null, // leaving "columns" null just returns all the columns.
                 null, // cols for "where" clause
                 null, // values for "where" clause
-                null, // columns to group by
-                null, // columns to filter by row groups
-                null  // sort order
+                null // columns to group by
         );
 
         TestDb.validateCursor(weatherCursor, weatherValues);
 
         dbHelper.close();
+    }
+
+    public void testGetType() {
+        // content://com.example.android.sunshine.app/weather/
+        String type = mContext.getContentResolver().getType(CONTENT_URI);
+        // vnd.android.cursor.dir/com.example.android.sunshine.app/weather
+        assertEquals(CONTENT_TYPE, type);
+
+        String testLocation = "94074";
+        // content://com.example.android.sunshine.app/weather/94074
+        type = mContext.getContentResolver().getType(
+                buildWeatherLocation(testLocation));
+        // vnd.android.cursor.dir/com.example.android.sunshine.app/weather
+        assertEquals(WeatherContract.WeatherEntry.CONTENT_TYPE, type);
+
+        String testDate = "20140612";
+        // content://com.example.android.sunshine.app/weather/94074/20140612
+        type = mContext.getContentResolver().getType(
+                WeatherContract.WeatherEntry.buildWeatherLocationWithDate(testLocation, testDate));
+        // vnd.android.cursor.item/com.example.android.sunshine.app/weather
+        assertEquals(WeatherContract.WeatherEntry.CONTENT_ITEM_TYPE, type);
+
+        // content://com.example.android.sunshine.app/location/
+        type = mContext.getContentResolver().getType(WeatherContract.LocationEntry.CONTENT_URI);
+        // vnd.android.cursor.dir/com.example.android.sunshine.app/location
+        assertEquals(WeatherContract.LocationEntry.CONTENT_TYPE, type);
+
+        // content://com.example.android.sunshine.app/location/1
+        type = mContext.getContentResolver().getType(WeatherContract.LocationEntry.buildLocationUri(1L));
+        // vnd.android.cursor.item/com.example.android.sunshine.app/location
+        assertEquals(WeatherContract.LocationEntry.CONTENT_ITEM_TYPE, type);
     }
 }
