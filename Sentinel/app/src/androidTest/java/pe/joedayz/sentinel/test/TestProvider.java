@@ -40,14 +40,23 @@ public class TestProvider extends AndroidTestCase {
         // the round trip.
 
         // A cursor is your primary interface to the query results.
-        Cursor cursor = db.query(
-                WeatherContract.LocationEntry.TABLE_NAME,  // Table to Query
-                null, // all columns
-                null, // Columns for the "where" clause
-                null, // Values for the "where" clause
-                null, // columns to group by
-                null, // columns to filter by row groups
-                null // sort order
+        Cursor cursor = mContext.getContentResolver().query(
+                WeatherContract.LocationEntry.CONTENT_URI,
+                null, // leaving "columns" null just returns all the columns.
+                null, // cols for "where" clause
+                null, // values for "where" clause
+                null  // sort order
+        );
+
+        TestDb.validateCursor(cursor, testValues);
+
+        // Now see if we can successfully query if we include the row id
+        cursor = mContext.getContentResolver().query(
+                WeatherContract.LocationEntry.buildLocationUri(locationRowId),
+                null, // leaving "columns" null just returns all the columns.
+                null, // cols for "where" clause
+                null, // values for "where" clause
+                null  // sort order
         );
 
         TestDb.validateCursor(cursor, testValues);
@@ -83,14 +92,14 @@ public class TestProvider extends AndroidTestCase {
         type = mContext.getContentResolver().getType(
                 buildWeatherLocation(testLocation));
         // vnd.android.cursor.dir/com.example.android.sunshine.app/weather
-        assertEquals(WeatherContract.WeatherEntry.CONTENT_TYPE, type);
+        assertEquals(CONTENT_TYPE, type);
 
         String testDate = "20140612";
         // content://com.example.android.sunshine.app/weather/94074/20140612
         type = mContext.getContentResolver().getType(
-                WeatherContract.WeatherEntry.buildWeatherLocationWithDate(testLocation, testDate));
+                buildWeatherLocationWithDate(testLocation, testDate));
         // vnd.android.cursor.item/com.example.android.sunshine.app/weather
-        assertEquals(WeatherContract.WeatherEntry.CONTENT_ITEM_TYPE, type);
+        assertEquals(CONTENT_ITEM_TYPE, type);
 
         // content://com.example.android.sunshine.app/location/
         type = mContext.getContentResolver().getType(WeatherContract.LocationEntry.CONTENT_URI);
