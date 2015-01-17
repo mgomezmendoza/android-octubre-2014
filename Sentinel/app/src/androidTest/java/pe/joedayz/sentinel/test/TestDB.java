@@ -18,9 +18,9 @@ import pe.joedayz.sentinel.data.WeatherDbHelper;
 
 import static pe.joedayz.sentinel.data.WeatherContract.WeatherEntry.*;
 
-public class TestDb extends AndroidTestCase {
+public class TestDB extends AndroidTestCase {
 
-    public static final String LOG_TAG = TestDb.class.getSimpleName();
+    public static final String LOG_TAG = TestDB.class.getSimpleName();
 
     public void testCreateDb() throws Throwable {
         mContext.deleteDatabase(WeatherDbHelper.DATABASE_NAME);
