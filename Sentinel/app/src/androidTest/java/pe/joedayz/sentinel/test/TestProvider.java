@@ -59,7 +59,7 @@ public class TestProvider extends AndroidTestCase {
         WeatherDbHelper dbHelper = new WeatherDbHelper(mContext);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        ContentValues testValues = TestDb.createNorthPoleLocationValues();
+        ContentValues testValues = TestDB.createNorthPoleLocationValues();
 
         long locationRowId;
         locationRowId = db.insert(LocationEntry.TABLE_NAME, null, testValues);
@@ -82,10 +82,10 @@ public class TestProvider extends AndroidTestCase {
                 null // sort order
         );
 
-        TestDb.validateCursor(cursor, testValues);
+        TestDB.validateCursor(cursor, testValues);
 
         // Fantastic.  Now that we have a location, add some weather!
-        ContentValues weatherValues = TestDb.createWeatherValues(locationRowId);
+        ContentValues weatherValues = TestDB.createWeatherValues(locationRowId);
 
         long weatherRowId = db.insert(WeatherEntry.TABLE_NAME, null, weatherValues);
         assertTrue(weatherRowId != -1);
@@ -101,7 +101,7 @@ public class TestProvider extends AndroidTestCase {
                 null  // sort order
         );
 
-        TestDb.validateCursor(weatherCursor, weatherValues);
+        TestDB.validateCursor(weatherCursor, weatherValues);
 
         dbHelper.close();
     }
