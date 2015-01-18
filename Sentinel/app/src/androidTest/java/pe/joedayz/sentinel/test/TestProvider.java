@@ -11,6 +11,8 @@ import android.util.Log;
 import pe.joedayz.sentinel.data.WeatherContract;
 import pe.joedayz.sentinel.data.WeatherDbHelper;
 
+import static pe.joedayz.sentinel.data.WeatherContract.LocationEntry.*;
+
 
 public class TestProvider extends AndroidTestCase {
 
@@ -27,10 +29,10 @@ public class TestProvider extends AndroidTestCase {
         WeatherDbHelper dbHelper = new WeatherDbHelper(mContext);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        ContentValues testValues = TestDB.createNorthPoleLocationValues();
+        ContentValues testValues = TestDb.createNorthPoleLocationValues();
 
         long locationRowId;
-        locationRowId = db.insert(WeatherContract.LocationEntry.TABLE_NAME, null, testValues);
+        locationRowId = db.insert(TABLE_NAME, null, testValues);
 
         // Verify we got a row back.
         assertTrue(locationRowId != -1);
@@ -41,14 +43,14 @@ public class TestProvider extends AndroidTestCase {
 
         // A cursor is your primary interface to the query results.
         Cursor cursor = mContext.getContentResolver().query(
-                WeatherContract.LocationEntry.CONTENT_URI,
+                CONTENT_URI,
                 null, // leaving "columns" null just returns all the columns.
                 null, // cols for "where" clause
                 null, // values for "where" clause
                 null  // sort order
         );
 
-        TestDB.validateCursor(cursor, testValues);
+        TestDb.validateCursor(cursor, testValues);
 
         // Now see if we can successfully query if we include the row id
         cursor = mContext.getContentResolver().query(
@@ -59,10 +61,10 @@ public class TestProvider extends AndroidTestCase {
                 null  // sort order
         );
 
-        TestDB.validateCursor(cursor, testValues);
+        TestDb.validateCursor(cursor, testValues);
 
         // Fantastic.  Now that we have a location, add some weather!
-        ContentValues weatherValues = TestDB.createWeatherValues(locationRowId);
+        ContentValues weatherValues = TestDb.createWeatherValues(locationRowId);
 
         long weatherRowId = db.insert(WeatherContract.WeatherEntry.TABLE_NAME, null, weatherValues);
         assertTrue(weatherRowId != -1);
@@ -76,7 +78,7 @@ public class TestProvider extends AndroidTestCase {
                 null // columns to group by
         );
 
-        TestDB.validateCursor(weatherCursor, weatherValues);
+        TestDb.validateCursor(weatherCursor, weatherValues);
 
 
         // Add the location values in with the weather data so that we can make
@@ -85,24 +87,34 @@ public class TestProvider extends AndroidTestCase {
 
         // Get the joined Weather and Location data
         weatherCursor = mContext.getContentResolver().query(
-                WeatherContract.WeatherEntry.buildWeatherLocation(TestDB.TEST_LOCATION),
+                WeatherContract.WeatherEntry.buildWeatherLocation(TestDb.TEST_LOCATION),
                 null, // leaving "columns" null just returns all the columns.
                 null, // cols for "where" clause
                 null, // values for "where" clause
                 null  // sort order
         );
-        TestDB.validateCursor(weatherCursor, weatherValues);
+        TestDb.validateCursor(weatherCursor, weatherValues);
 
         // Get the joined Weather and Location data with a start date
         weatherCursor = mContext.getContentResolver().query(
                 WeatherContract.WeatherEntry.buildWeatherLocationWithStartDate(
-                        TestDB.TEST_LOCATION, TestDB.TEST_DATE),
+                        TestDb.TEST_LOCATION, TestDb.TEST_DATE),
                 null, // leaving "columns" null just returns all the columns.
                 null, // cols for "where" clause
                 null, // values for "where" clause
                 null  // sort order
         );
-        TestDB.validateCursor(weatherCursor, weatherValues);
+        TestDb.validateCursor(weatherCursor, weatherValues);
+
+        // Get the joined Weather data for a specific date
+        weatherCursor = mContext.getContentResolver().query(
+                WeatherContract.WeatherEntry.buildWeatherLocationWithDate(TestDb.TEST_LOCATION, TestDb.TEST_DATE),
+                null,
+                null,
+                null,
+                null
+        );
+        TestDb.validateCursor(weatherCursor, weatherValues);
 
         dbHelper.close();
     }
