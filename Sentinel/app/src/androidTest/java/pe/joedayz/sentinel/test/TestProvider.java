@@ -27,7 +27,7 @@ public class TestProvider extends AndroidTestCase {
         WeatherDbHelper dbHelper = new WeatherDbHelper(mContext);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        ContentValues testValues = TestDb.createNorthPoleLocationValues();
+        ContentValues testValues = TestDB.createNorthPoleLocationValues();
 
         long locationRowId;
         locationRowId = db.insert(WeatherContract.LocationEntry.TABLE_NAME, null, testValues);
@@ -48,7 +48,7 @@ public class TestProvider extends AndroidTestCase {
                 null  // sort order
         );
 
-        TestDb.validateCursor(cursor, testValues);
+        TestDB.validateCursor(cursor, testValues);
 
         // Now see if we can successfully query if we include the row id
         cursor = mContext.getContentResolver().query(
@@ -59,10 +59,10 @@ public class TestProvider extends AndroidTestCase {
                 null  // sort order
         );
 
-        TestDb.validateCursor(cursor, testValues);
+        TestDB.validateCursor(cursor, testValues);
 
         // Fantastic.  Now that we have a location, add some weather!
-        ContentValues weatherValues = TestDb.createWeatherValues(locationRowId);
+        ContentValues weatherValues = TestDB.createWeatherValues(locationRowId);
 
         long weatherRowId = db.insert(TABLE_NAME, null, weatherValues);
         assertTrue(weatherRowId != -1);
@@ -76,7 +76,7 @@ public class TestProvider extends AndroidTestCase {
                 null // columns to group by
         );
 
-        TestDb.validateCursor(weatherCursor, weatherValues);
+        TestDB.validateCursor(weatherCursor, weatherValues);
 
         dbHelper.close();
     }
