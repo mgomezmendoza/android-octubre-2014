@@ -15,9 +15,9 @@ import java.util.Set;
 import pe.joedayz.sentinel.data.WeatherContract;
 import pe.joedayz.sentinel.data.WeatherDbHelper;
 
-public class TestDb extends AndroidTestCase {
+public class TestDB extends AndroidTestCase {
 
-    public static final String LOG_TAG = TestDb.class.getSimpleName();
+    public static final String LOG_TAG = TestDB.class.getSimpleName();
     static final String TEST_LOCATION = "99705";
     static final String TEST_DATE = "20141205";
 
