@@ -15,6 +15,7 @@ import pe.joedayz.sentinel.data.WeatherContract.LocationEntry;
 import pe.joedayz.sentinel.data.WeatherContract.WeatherEntry;
 import pe.joedayz.sentinel.data.WeatherDbHelper;
 
+
 public class TestProvider extends AndroidTestCase {
 
     public static final String LOG_TAG = TestProvider.class.getSimpleName();
