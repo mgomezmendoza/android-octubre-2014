@@ -39,6 +39,25 @@
             android:authorities="pe.joedayz.sentinel"
             android:name=".data.WeatherProvider" />
 
+        <!--
+                <provider
+            android:authorities="com.myapp.myauthorities"
+            android:name=".MyContentProvider"
+             android:enabled="true"
+             android:exported="true"/>
+        -->
+
     </application>
+
+
+    <!--
+        <permisson
+            android:name="com.myapp.LICENSE_TO_KILL"
+            android:protectionLevel="dangerous"
+            android:label="Licensed to Kill">
+       </permisson>
+
+    -->
+
 
 </manifest>
