@@ -1,17 +1,16 @@
 package pe.joedayz.sentinel;
 
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-
-import pe.joedayz.sentinel.data.WeatherContract;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import pe.joedayz.sentinel.data.WeatherContract;
 
 public class Utility {
     public static String getPreferredLocation(Context context) {
