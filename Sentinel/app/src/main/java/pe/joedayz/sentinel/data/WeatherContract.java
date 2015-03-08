@@ -1,8 +1,27 @@
-package pe.joedayz.sentinel.data;
+/*
+ * Copyright (C) 2014 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.example.android.sunshine.app.data;
 
 import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Defines table and column names for the weather database.
@@ -26,6 +45,37 @@ public class WeatherContract {
     // At least, let's hope not.  Don't be that dev, reader.  Don't be that dev.
     public static final String PATH_WEATHER = "weather";
     public static final String PATH_LOCATION = "location";
+
+    // Format used for storing dates in the database.  ALso used for converting those strings
+    // back into date objects for comparison/processing.
+    public static final String DATE_FORMAT = "yyyyMMdd";
+
+    /**
+     * Converts Date class to a string representation, used for easy comparison and database lookup.
+     * @param date The input date
+     * @return a DB-friendly representation of the date, using the format defined in DATE_FORMAT.
+     */
+    public static String getDbDateString(Date date){
+        // Because the API returns a unix timestamp (measured in seconds),
+        // it must be converted to milliseconds in order to be converted to valid date.
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+        return sdf.format(date);
+    }
+
+    /**
+     * Converts a dateText to a long Unix time representation
+     * @param dateText the input date string
+     * @return the Date object
+     */
+    public static Date getDateFromDb(String dateText) {
+        SimpleDateFormat dbDateFormat = new SimpleDateFormat(DATE_FORMAT);
+        try {
+            return dbDateFormat.parse(dateText);
+        } catch ( ParseException e ) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     /* Inner class that defines the table contents of the location table */
     public static final class LocationEntry implements BaseColumns {
